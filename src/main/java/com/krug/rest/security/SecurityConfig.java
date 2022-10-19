@@ -1,5 +1,6 @@
 package com.krug.rest.security;
 
+import com.krug.rest.model.Rol;
 import com.krug.rest.security.jwt.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,11 +42,15 @@ public class SecurityConfig {
         http.cors();
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/api/authentication/**").permitAll()
+        http.authorizeRequests()
+                .antMatchers("/api/authentication/**").permitAll()
+                .antMatchers("/api/internal/**").hasRole(Rol.SYSTEM_MANAGER.name())
                 .anyRequest().authenticated();
 
        // jwt filter
-        http.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        //internal > jwt >authentication
+        http.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(internalApiAuthenticationFilter(), JwtAuthorizationFilter.class);
         return http.build();
     }
 
