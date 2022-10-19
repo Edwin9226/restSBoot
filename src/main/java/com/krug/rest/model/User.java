@@ -25,5 +25,6 @@ public class User extends AuditModel {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false )
     private Rol role;
-
+    @Transient
+    private String token;
 }
