@@ -12,6 +12,6 @@ import java.util.Optional;
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUserName(String username);
-    @Query("upadate User set role = :role where username= :username")
+    @Query("upadate Users set role = :role where username= :username")
     void updateUserRole(@Param("username") String username, @Param("role")Rol role);
 }

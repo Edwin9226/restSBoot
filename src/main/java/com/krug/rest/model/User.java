@@ -4,14 +4,10 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-/**
- * @author Edwin Pinchao
- * @date 13.10.2022
- * @Time 05:00
- */
+
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User extends AuditModel {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)

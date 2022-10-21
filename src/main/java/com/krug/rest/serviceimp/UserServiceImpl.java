@@ -31,6 +31,6 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional  //TransaccionalRequired when executing on update/delete query.
     public void makeAdmin(String username){
-        userRepository.updateUserRole(username, Rol.ADMIN);
+       userRepository.updateUserRole(username, Rol.ADMIN);
     }
 }

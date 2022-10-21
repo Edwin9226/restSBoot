@@ -20,7 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class SecurityConfig {
-    @Value("${app.jwt.expiration-in-ms}")
+    @Value("${authentication.internal-api-key}")
     private String internalApiKey;
 
     @Autowired
@@ -29,7 +29,11 @@ public class SecurityConfig {
     //protected  void configure(AuthenticationManagerBuilder auth)throws Exception{
       //  auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
    // }
+    @Bean
+    public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();
+    }
 
+    @Bean
     public DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
@@ -70,14 +74,12 @@ public class SecurityConfig {
     //public AuthenticationManager authenticationManagerBean() throws Exception{
       //  return super.authenticationManagerBean();
     //}
+    @Bean
     public AuthenticationManager authenticationManager (AuthenticationConfiguration authConfig) throws Exception{
         return authConfig.getAuthenticationManager();
     }
+
     @Bean
-    public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();
-    }
-
-
     public WebMvcConfigurer corsConfigure() {
         return new WebMvcConfigurer() {
             @Override
