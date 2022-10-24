@@ -11,8 +11,8 @@ import javax.persistence.*;
  */
 @Data
 @Entity
-@Table(name = "user")
-public class User extends AuditModel {
+@Table(name = "users")
+public class User  {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,5 +25,8 @@ public class User extends AuditModel {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false )
     private Rol role;
+
+    @Transient
+    private String token;
 
 }
