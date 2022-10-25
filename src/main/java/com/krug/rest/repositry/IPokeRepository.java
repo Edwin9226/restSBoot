@@ -1,10 +1,10 @@
 package com.krug.rest.repositry;
 
-import com.krug.rest.model.Book;
+import com.krug.rest.model.Poke;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface IBookRepository extends JpaRepository<Book, Long> {
+public interface IPokeRepository extends JpaRepository<Poke, Long> {
 }

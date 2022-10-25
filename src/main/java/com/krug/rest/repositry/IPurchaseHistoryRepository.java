@@ -12,7 +12,7 @@ import java.util.List;
 public interface IPurchaseHistoryRepository extends JpaRepository<PurchaseHistory, Long> {
     @Query("select "+
             "b.title as title, ph.price as price "
-            +"from PurchaseHistory ph left join Book b on b.id = ph.bookId "+
+            +"from PurchaseHistory ph left join Poke b on b.id = ph.pokeId "+
             "where ph.userId = :userId")
     List<IPurchaseItem> finAllPurchasesOfUser(@Param("userId") Long userId);
 }

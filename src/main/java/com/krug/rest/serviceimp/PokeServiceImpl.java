@@ -1,21 +1,21 @@
 package com.krug.rest.serviceimp;
 
-import com.krug.rest.model.Book;
-import com.krug.rest.repositry.IBookRepository;
-import com.krug.rest.service.IBookService;
+import com.krug.rest.model.Poke;
+import com.krug.rest.repositry.IPokeRepository;
+import com.krug.rest.service.IPokeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class BookServiceImpl implements IBookService {
+public class PokeServiceImpl implements IPokeService {
     @Autowired
-    private IBookRepository bookRepository;
+    private IPokeRepository bookRepository;
 
     @Override
-    public Book saveBook(Book book){
-        return bookRepository.save(book);
+    public Poke saveBook(Poke poke){
+        return bookRepository.save(poke);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class BookServiceImpl implements IBookService {
     bookRepository.deleteById(id);
     }
     @Override
-    public List<Book> findAllBooks(){
+    public List<Poke> findAllBooks(){
         return bookRepository.findAll();
     }
 

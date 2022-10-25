@@ -15,6 +15,14 @@ Content-Type: application/json
     "username": "user",
     "password": "user"
 }
+
+http://localhost:8080/api/authentication/sign-up
+
+{
+    "name":"admin1",
+    "username": "admin1",
+    "password":"admin1"
+}
 ```
 
 #### Sign-In

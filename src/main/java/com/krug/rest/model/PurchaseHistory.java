@@ -13,8 +13,8 @@ public class PurchaseHistory {
     private Long id;
     @Column(name = "user_id", nullable = false)
     private  Long userId;
-    @Column(name = "book_id", nullable = false)
-    private Long bookId;
+    @Column(name = "poke_id", nullable = false)
+    private Long pokeId;
     @Column(name = "price", nullable = false)
     private Double price;
 }
