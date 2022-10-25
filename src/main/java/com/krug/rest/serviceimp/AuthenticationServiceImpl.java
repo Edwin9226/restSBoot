@@ -2,6 +2,7 @@ package com.krug.rest.serviceimp;
 
 import com.krug.rest.model.User;
 import com.krug.rest.security.UserPrincipal;
+import com.krug.rest.security.jwt.IJwtProvider;
 import com.krug.rest.service.IAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 public class AuthenticationServiceImpl implements IAuthenticationService {
 
     @Autowired
+    private IJwtProvider jwtProvider;
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Override
@@ -23,8 +26,9 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         );
 
         UserPrincipal userPrincipal= (UserPrincipal) authentication.getPrincipal();
+        String jwt = jwtProvider.generateToken(userPrincipal);
         User signInUser = userPrincipal.getUser();
-        signInUser.setToken(null); 
+        signInUser.setToken(jwt);
         return signInUser;
     }
 }
