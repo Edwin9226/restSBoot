@@ -1,27 +1,27 @@
 package com.krug.rest.controller;
 
-import com.krug.rest.model.Book;
-import com.krug.rest.service.IBookService;
+import com.krug.rest.model.Poke;
+import com.krug.rest.service.IPokeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/book")//pre/path
-public class BookController {
+@RequestMapping("api/poke")//pre/path
+public class PokeController {
 @Autowired
-    private IBookService bookService;
+    private IPokeService bookService;
 
     @PostMapping//api/book
-    public ResponseEntity<?> saveBook(@RequestBody Book book)
+    public ResponseEntity<?> saveBook(@RequestBody Poke poke)
     {
-        return new ResponseEntity<>(bookService.saveBook(book), HttpStatus.CREATED);
+        return new ResponseEntity<>(bookService.saveBook(poke), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("{bookId}")
-    public ResponseEntity<?> deleteBook(@PathVariable Long bookId ){
-        bookService.deleteBook(bookId);
+    @DeleteMapping("{pokeId}")
+    public ResponseEntity<?> deleteBook(@PathVariable Long pokeId ){
+        bookService.deleteBook(pokeId);
         return  new ResponseEntity<>(HttpStatus.OK);
     }
 

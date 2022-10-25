@@ -49,8 +49,8 @@ public class SecurityConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
                 .antMatchers("/api/authentication/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/book/**").permitAll()
-                .antMatchers("/api/book/**").hasRole(Rol.ADMIN.name())
+                .antMatchers(HttpMethod.GET,"/api/poke/**").permitAll()
+                .antMatchers("/api/poke/**").hasRole(Rol.ADMIN.name())
                 .antMatchers("/api/internal/**").hasRole(Rol.SYSTEM_MANAGER.name())
                 .anyRequest().authenticated();
 
