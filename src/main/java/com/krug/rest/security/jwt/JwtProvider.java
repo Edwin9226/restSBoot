@@ -76,11 +76,7 @@ public class JwtProvider implements IJwtProvider{
         {
             return  false;
         }
-        if(claims.getExpiration().before(new Date()))
-        {
-            return false;
-        }
-        return  true;
+        return !claims.getExpiration().before(new Date());
     }
     private Claims extractClaims(HttpServletRequest request){
         String token= SecurityUtils.extractAuthTokenFromRequest(request);
