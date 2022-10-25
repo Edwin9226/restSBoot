@@ -4,11 +4,15 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-
+/**
+ * @author Edwin Pinchao
+ * @date 13.10.2022
+ * @Time 05:00
+ */
 @Data
 @Entity
 @Table(name = "users")
-public class User extends AuditModel {
+public class User  {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,6 +25,8 @@ public class User extends AuditModel {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false )
     private Rol role;
+
     @Transient
     private String token;
+
 }

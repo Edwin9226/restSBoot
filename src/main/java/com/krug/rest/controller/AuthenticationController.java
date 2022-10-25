@@ -12,24 +12,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/authentication")//pre-path
+@RequestMapping("api/authentication")
 public class AuthenticationController {
-    @Autowired
-    private IAuthenticationService authenticationService;
 
+    @Autowired
+    private  IAuthenticationService authenticationService;
     @Autowired
     private IUserService userService;
 
-    @PostMapping("sign-up")//api/authentication/sign-up
-    public ResponseEntity<User> signUp(@RequestBody User user){
-        if(userService.findByUserName(user.getUsername()).isPresent()){
-            return  new ResponseEntity<>(HttpStatus.CONFLICT);
+    @PostMapping("sign-up")
+    public ResponseEntity<?> signUp(@RequestBody User user)
+    {
+        if(userService.findByUserName(user.getUsername()).isPresent())
+        {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        return  new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
 
     @PostMapping("sign-in")
-    public ResponseEntity<?> signIn(@RequestBody User user){
-        return  new ResponseEntity<>(authenticationService.signInAndReturnJWT(user),HttpStatus.OK);
+    public ResponseEntity<?> signIn(@RequestBody User user)
+    {
+        return new ResponseEntity<>(authenticationService.signInAndReturnJWT(user), HttpStatus.OK);
     }
+
 }

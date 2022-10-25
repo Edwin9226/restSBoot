@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -22,13 +23,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SecurityConfig {
     @Value("${authentication.internal-api-key}")
     private String internalApiKey;
-
     @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private CustomUserDetailService userDetailsService;
+
 
     //protected  void configure(AuthenticationManagerBuilder auth)throws Exception{
-      //  auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-   // }
+    //  auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    // }
     @Bean
     public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();
     }
@@ -48,10 +49,12 @@ public class SecurityConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
                 .antMatchers("/api/authentication/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/book/**").permitAll()
+                .antMatchers("/api/book/**").hasRole(Rol.ADMIN.name())
                 .antMatchers("/api/internal/**").hasRole(Rol.SYSTEM_MANAGER.name())
                 .anyRequest().authenticated();
 
-       // jwt filter
+        // jwt filter
         //internal > jwt >authentication
         http.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(internalApiAuthenticationFilter(), JwtAuthorizationFilter.class);
@@ -59,9 +62,9 @@ public class SecurityConfig {
     }
 
     @Bean
-    public  InternalApiAuthenticationFilter internalApiAuthenticationFilter()
+    public  InternalApiAuthentiocationFilter internalApiAuthenticationFilter()
     {
-        return  new InternalApiAuthenticationFilter(internalApiKey);
+        return  new InternalApiAuthentiocationFilter(internalApiKey);
     }
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilter()
@@ -74,7 +77,6 @@ public class SecurityConfig {
     //public AuthenticationManager authenticationManagerBean() throws Exception{
       //  return super.authenticationManagerBean();
     //}
-    @Bean
     public AuthenticationManager authenticationManager (AuthenticationConfiguration authConfig) throws Exception{
         return authConfig.getAuthenticationManager();
     }

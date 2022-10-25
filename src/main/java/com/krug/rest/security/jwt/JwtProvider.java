@@ -19,17 +19,18 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-public class JwtProvider implements  IJwtProvider{
+public class JwtProvider implements IJwtProvider{
+
     @Value("${app.jwt.secret}")
     private String JWT_SECRET;
     @Value("${app.jwt.expiration-in-ms}")
-    private String JWT_EXPIRATION_IN_MS;
+    private Long JWT_EXPIRATION_IN_MS;
 
     @Override
     public  String generateToken(UserPrincipal auth){
         String authorities= auth.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining());
+                .collect(Collectors.joining(","));
         return Jwts.builder()
                 .setSubject(auth.getUsername())
                 .claim("roles", authorities)
@@ -41,12 +42,18 @@ public class JwtProvider implements  IJwtProvider{
 
     @Override
     public Authentication getAuthentication(HttpServletRequest request){
-     Claims claims= extractClaims(request);
-     String username= claims.getSubject();
-     Long userId = claims.get("userId", Long.class);
-     Set<GrantedAuthority> authorities= Arrays.stream(claims.get("roles").toString().split(","))
-             .map(SecurityUtils::convertToAuthority)
-             .collect(Collectors.toSet());
+        Claims claims= extractClaims(request);
+
+        if (claims == null)
+        {
+            return null;
+        }
+
+        String username= claims.getSubject();
+        Long userId = claims.get("userId", Long.class);
+        Set<GrantedAuthority> authorities= Arrays.stream(claims.get("roles").toString().split(","))
+                .map(SecurityUtils::convertToAuthority)
+                .collect(Collectors.toSet());
 
         UserDetails userDetails = UserPrincipal.builder()
                 .username(username)
@@ -87,5 +94,4 @@ public class JwtProvider implements  IJwtProvider{
                 .parseClaimsJws(token)
                 .getBody();
     }
-
 }
