@@ -26,7 +26,7 @@ public class UserServiceImpl implements IUserService {
     }
     @Override
     public Optional<User> findByUserName(String username){
-        return userRepository.findByUserName(username);
+        return userRepository.findByUsername(username);
     }
     @Override
     @Transactional  //TransaccionalRequired when executing on update/delete query.

@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface IPurchaseHistoryRepository extends JpaRepository<PurchaseHistory, Long> {
     @Query("select "+
-            "b.title as title, ph.price as price"
-            +" from PurchaseHistory ph left join Book b on b.id=ph.bookId"+
-            "where ph.userId= :userId")
+            "b.title as title, ph.price as price "
+            +"from PurchaseHistory ph left join Book b on b.id = ph.bookId "+
+            "where ph.userId = :userId")
     List<IPurchaseItem> finAllPurchasesOfUser(@Param("userId") Long userId);
 }

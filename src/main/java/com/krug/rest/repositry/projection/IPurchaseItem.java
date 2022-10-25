@@ -8,6 +8,6 @@ public interface IPurchaseItem  {
 
     String getTitle();
     Double getPrice();
-    LocalDateTime getPurchaseTime();
+
 
 }
